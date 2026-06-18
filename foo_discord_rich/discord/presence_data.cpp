@@ -299,16 +299,10 @@ void PresenceModifier::UpdateDuration( double currentTime )
     switch ( timeSetting )
     {
     case config::TimeSetting::Elapsed:
-    {
-        pd.presence.startTimestamp = std::time( nullptr ) - std::llround( currentTime );
-        pd.presence.endTimestamp = 0;
-
-        break;
-    }
     case config::TimeSetting::Remaining:
     {
-        pd.presence.startTimestamp = 0;
-        pd.presence.endTimestamp = std::time( nullptr ) + std::max<uint64_t>( 0, std::llround( pd.trackLength - currentTime ) );
+        pd.presence.startTimestamp = std::time( nullptr ) - std::llround( currentTime );
+        pd.presence.endTimestamp = pd.presence.startTimestamp + std::llround ( pd.trackLength );
 
         break;
     }
